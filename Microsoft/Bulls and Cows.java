@@ -20,6 +20,6 @@ public class Main {
       count = count -bull; 
       String  s= bull+"A"+count+"B";
 
-      return s;
+    return s;
     }
 }
