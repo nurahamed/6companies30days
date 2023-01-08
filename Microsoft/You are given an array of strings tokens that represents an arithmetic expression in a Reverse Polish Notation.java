@@ -1,4 +1,4 @@
-public class Main {
+class Solution  {
     public int evalRPN(String[] tokens) {
        Stack<Integer> stack=new Stack();
         String oprtr="+-*/";
