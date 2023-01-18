@@ -1,0 +1,30 @@
+class Solution {
+    public boolean canPartitionKSubsets(int[] nums, int k) {
+        int sum = 0;
+        for(int num : nums)
+            sum += num;
+        if(k <= 0 || sum % k != 0)
+            return false;
+        
+        return canPartition(nums, 0, 0, k, 0, sum/k);
+    }
+    
+    public boolean canPartition(int[] nums, int used, int start_index, int k, int cur_sum, int target){
+        if (k == 1)
+            return true; // this means find 1 subset whose sum is sum/k.  This is rather obvious, because sum - (k-1)* target ...
+        if (cur_sum > target)
+            return false;
+
+        for(int i = start_index; i < nums.length; i++){
+            if ((used & (1 << i)) != 0) continue;
+
+            int new_used = (used | (1 << i));
+            if ((cur_sum + nums[i])== target && canPartition(nums, new_used, 0, k-1, 0, target))
+                return true;
+                
+            if (canPartition(nums, new_used, i+1, k, cur_sum + nums[i], target))
+                return true;
+        }
+        return false;
+    }
+}
