@@ -1,0 +1,23 @@
+class Solution {
+        public int findKthNumber(int n, int k) {
+    int res = 0;
+    
+    do {
+    	res *= 10;
+    	int i = (res == 0 ? 1 : 0);
+    	
+    	for (int count; i < 10; i++) {
+            long base = 1, max = (res + i + 1) * base - 1;
+            for (count = 0; max <= n; base *= 10, max = (res + i + 1) * base - 1) count += base;
+            if (n >= (res + i) * base) count += (n - (res + i) * base + 1);
+            if (k <= count) break;
+            k -= count;
+        }
+    		
+    	res += i;
+    		
+    } while (k-- > 1);
+    	
+    return res;
+   }
+ }
