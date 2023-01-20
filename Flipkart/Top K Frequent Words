@@ -1,0 +1,25 @@
+class Solution
+{
+    public List<String> topKFrequent(String[] words, int k)
+	{
+        PriorityQueue<Map.Entry<String, Integer>> minHeap = new PriorityQueue<>((a,b) -> a.getValue() == b.getValue() ? b.getKey().compareTo(a.getKey()) : a.getValue() - b.getValue());
+		Map<String, Integer> map = new HashMap<>();
+		List<String> list = new LinkedList<>();
+
+		for(String word : words)
+			map.put(word, map.getOrDefault(word, 0) + 1);
+
+        for(Map.Entry<String, Integer> entry: map.entrySet())
+        {
+            minHeap.offer(entry);
+
+            if(minHeap.size() > k)
+                minHeap.poll();
+        }
+
+        while(!minHeap.isEmpty())
+            list.add(0, minHeap.poll().getKey());
+
+        return list;
+    }
+}
