@@ -1,0 +1,39 @@
+class Solution {
+    public int[] rearrangeBarcodes(int[] barcodes) {
+        HashMap<Integer,Integer>mp=new HashMap<>();
+        PriorityQueue<Integer>pq = new PriorityQueue<>((a,b) -> ( mp.get(b) - mp.get(a)));
+        int[] res = new int[barcodes.length];
+        if(barcodes.length == 0)
+            return res;
+        if(barcodes.length == 1) {
+            res[0] = barcodes[0];
+            return res;
+        }
+        for(int b : barcodes) {
+            mp.put(b, mp.getOrDefault(b,0) + 1);
+            
+        }
+        pq.addAll(mp.keySet());
+        int index = 0;
+        while(pq.size()>1) {
+            int a = pq.poll();
+            int b = pq.poll();
+            res[index++] = a;
+            res[index++] = b;
+            if(mp.get(a) - 1 > 0) {
+                mp.put(a, mp.getOrDefault(a,0) - 1);
+                pq.add(a);
+            }
+            if(mp.get(b) - 1 > 0) {
+                mp.put(b, mp.getOrDefault(b,0) - 1);
+                pq.add(b);
+            }
+        }
+        if(!pq.isEmpty()) {
+            int last = pq.poll();
+            res[index++] = last;
+            return res;
+        }
+        return res;
+    }
+}
